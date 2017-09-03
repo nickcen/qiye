@@ -15,6 +15,8 @@
             ul.dropdown-menu
               li class="#{is_active?('workers', params[:controller])}"
                 = link_to "人员", workers_path
+              li class="#{is_active?('roles', params[:controller])}"
+                = link_to "角色", roles_path
 
         ul.nav.navbar-nav.ieCss.pull-right role="presentation"
           .dropdown

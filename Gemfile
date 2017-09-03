@@ -41,6 +41,8 @@ gem 'will_paginate', github: 'jonatack/will_paginate'
 gem 'will_paginate-bootstrap'
 
 gem 'devise'
+gem 'rolify'
+gem 'cancancan'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

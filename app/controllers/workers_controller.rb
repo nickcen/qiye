@@ -1,4 +1,5 @@
 class WorkersController < ApplicationController
+  load_and_authorize_resource
   before_action :set_worker, only: [:show, :edit, :update, :destroy, :reset_password]
   
   def index
@@ -76,6 +77,6 @@ class WorkersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def worker_params
-      params.require(:worker).permit(:email, :password, :password_confirmation, role_ids: [], city_ids: [])
+      params.require(:worker).permit(:email, :password, :password_confirmation, role_ids: [])
     end
 end

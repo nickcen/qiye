@@ -6,4 +6,5 @@ Rails.application.routes.draw do
       get :reset_password
     end
   end
+  resources :roles
 end
