@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource)
     if current_worker.has_role?(:admin)
       workers_path
+    elsif current_worker.has_role?(:yunying)
+      categories_path
     end
   end
 

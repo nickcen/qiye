@@ -1,0 +1,19 @@
+ol.breadcrumb
+  li.active 
+    = link_to '品类', categories_path
+  li
+    = @category.name
+
+.clear
+br
+
+table.table.table-striped.no-border
+  tr
+    td width='25%' Logo
+    td width='25%' = image_tag qiniu_url(@category.logo), size: '150x150'
+    td width='25%' Is del
+    td width='25%' 
+      - if @category.is_del
+        span.label.label-primary 是
+      - else
+        span.label.label-default 否

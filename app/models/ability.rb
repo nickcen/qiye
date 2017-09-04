@@ -7,5 +7,9 @@ class Ability
       can :manage, Worker
       can :manage, Role
     end
+
+    if worker.has_role?(:yunying)
+      can :manage, Category
+    end 
   end
 end

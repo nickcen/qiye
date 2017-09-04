@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'https://gems.ruby-china.org/'
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
@@ -43,6 +43,9 @@ gem 'will_paginate-bootstrap'
 gem 'devise'
 gem 'rolify'
 gem 'cancancan'
+
+gem 'config'
+gem 'qiniu', '~> 6.8.1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

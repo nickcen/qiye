@@ -7,4 +7,7 @@ Rails.application.routes.draw do
     end
   end
   resources :roles
+
+  resources :categories do 
+  end
 end
