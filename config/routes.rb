@@ -9,5 +9,6 @@ Rails.application.routes.draw do
   resources :roles
 
   resources :categories do 
+    resources :products
   end
 end

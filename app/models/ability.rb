@@ -10,6 +10,7 @@ class Ability
 
     if worker.has_role?(:yunying)
       can :manage, Category
+      can :manage, Product
     end 
   end
 end
