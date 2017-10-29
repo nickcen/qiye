@@ -16,6 +16,7 @@ class Ability
 
     if worker.has_role?(:fenchengshi)
       can :manage, Station
+      can :manage, Courier
     end
   end
 end

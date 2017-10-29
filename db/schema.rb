@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 201710290740321) do
+ActiveRecord::Schema.define(version: 201710291020032) do
 
   create_table "addresses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "address"
@@ -46,6 +46,32 @@ ActiveRecord::Schema.define(version: 201710290740321) do
     t.datetime "updated_at", null: false
     t.index ["city_id"], name: "index_cities_workers_on_city_id", using: :btree
     t.index ["worker_id"], name: "index_cities_workers_on_worker_id", using: :btree
+  end
+
+  create_table "couriers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          default: 0,  null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.index ["email"], name: "index_couriers_on_email", unique: true, using: :btree
+    t.index ["reset_password_token"], name: "index_couriers_on_reset_password_token", unique: true, using: :btree
+  end
+
+  create_table "couriers_stations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "courier_id"
+    t.integer  "station_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["courier_id"], name: "index_couriers_stations_on_courier_id", using: :btree
+    t.index ["station_id"], name: "index_couriers_stations_on_station_id", using: :btree
   end
 
   create_table "products", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
