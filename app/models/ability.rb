@@ -11,6 +11,7 @@ class Ability
     if worker.has_role?(:yunying)
       can :manage, Category
       can :manage, Product
+      can :manage, City
     end 
 
     if worker.has_role?(:fenchengshi)

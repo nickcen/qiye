@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :workers do 
     member do 
       get :reset_password
+      put :change_current_city
     end
   end
   resources :roles
@@ -20,4 +21,6 @@ Rails.application.routes.draw do
       get :suggestion
     end
   end
+
+  resources :cities
 end
