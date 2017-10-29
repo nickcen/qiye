@@ -7,6 +7,8 @@ class ApplicationController < ActionController::Base
       workers_path
     elsif current_worker.has_role?(:yunying)
       categories_path
+    elsif current_worker.has_role?(:fenchengshi)
+      stations_path
     end
   end
 

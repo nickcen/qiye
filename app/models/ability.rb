@@ -12,5 +12,9 @@ class Ability
       can :manage, Category
       can :manage, Product
     end 
+
+    if worker.has_role?(:fenchengshi)
+      can :manage, Station
+    end
   end
 end
