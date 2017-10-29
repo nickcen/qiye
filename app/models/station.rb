@@ -5,6 +5,8 @@ class Station < ApplicationRecord
 
   accepts_nested_attributes_for :address
 
+  belongs_to :city
+
   def to_s
     self.name
   end

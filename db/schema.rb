@@ -101,6 +101,8 @@ ActiveRecord::Schema.define(version: 201710291020032) do
     t.boolean  "is_del",     default: false
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+    t.integer  "city_id"
+    t.index ["city_id"], name: "index_stations_on_city_id", using: :btree
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
