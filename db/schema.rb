@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 201710291020032) do
+ActiveRecord::Schema.define(version: 201711061534181) do
 
   create_table "addresses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "address"
@@ -30,6 +30,13 @@ ActiveRecord::Schema.define(version: 201710291020032) do
     t.boolean  "is_del",     default: false
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+  end
+
+  create_table "categories_cities", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "city_id"
+    t.integer "category_id"
+    t.index ["category_id"], name: "index_categories_cities_on_category_id", using: :btree
+    t.index ["city_id"], name: "index_categories_cities_on_city_id", using: :btree
   end
 
   create_table "cities", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -61,6 +68,8 @@ ActiveRecord::Schema.define(version: 201710291020032) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.integer  "city_id"
+    t.index ["city_id"], name: "index_couriers_on_city_id", using: :btree
     t.index ["email"], name: "index_couriers_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_couriers_on_reset_password_token", unique: true, using: :btree
   end
@@ -72,6 +81,30 @@ ActiveRecord::Schema.define(version: 201710291020032) do
     t.datetime "updated_at", null: false
     t.index ["courier_id"], name: "index_couriers_stations_on_courier_id", using: :btree
     t.index ["station_id"], name: "index_couriers_stations_on_station_id", using: :btree
+  end
+
+  create_table "price_rules", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "grade"
+    t.integer  "city_id"
+    t.integer  "category_id"
+    t.date     "from_date"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["category_id"], name: "index_price_rules_on_category_id", using: :btree
+    t.index ["city_id"], name: "index_price_rules_on_city_id", using: :btree
+  end
+
+  create_table "prices", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.float    "price1",     limit: 24, default: 0.0
+    t.float    "price2",     limit: 24, default: 0.0
+    t.float    "price3",     limit: 24, default: 0.0
+    t.float    "price4",     limit: 24, default: 0.0
+    t.float    "price5",     limit: 24, default: 0.0
+    t.float    "price6",     limit: 24, default: 0.0
+    t.integer  "product_id"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.index ["product_id"], name: "index_prices_on_product_id", using: :btree
   end
 
   create_table "products", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -145,5 +178,10 @@ ActiveRecord::Schema.define(version: 201710291020032) do
     t.index ["worker_id", "role_id"], name: "index_workers_roles_on_worker_id_and_role_id", using: :btree
   end
 
+  add_foreign_key "categories_cities", "categories"
+  add_foreign_key "categories_cities", "cities"
+  add_foreign_key "price_rules", "categories"
+  add_foreign_key "price_rules", "cities"
+  add_foreign_key "prices", "products"
   add_foreign_key "products", "categories"
 end

@@ -50,6 +50,9 @@ GEM
     awesome_print (1.8.0)
     bcrypt (3.1.11)
     bindex (0.5.0)
+    bootstrap-editable-rails (0.0.9)
+      railties (>= 3.1)
+      sass-rails
     bootstrap-sass (3.3.7)
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
@@ -223,6 +226,7 @@ PLATFORMS
 
 DEPENDENCIES
   awesome_print
+  bootstrap-editable-rails
   bootstrap-sass (~> 3.3.6)
   byebug
   cancancan
