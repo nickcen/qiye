@@ -3,8 +3,18 @@
 
   .form-inputs
     = f.input :grade, collection: ('A'..'F').zip(1..6)
-    = f.association :category
-    = f.input :from_date
+    = f.association :category, collection: current_city.categories
+    = f.input :from_date, as: :date_picker
 
   .form-actions
     = f.button :submit
+
+javascript:
+  $(function(){
+    $("input.datepicker").each(function(input) {
+      $(this).datepicker({
+        dateFormat: "yy-mm-dd",
+        altField: $(this).next()
+      })
+    })
+  })
