@@ -6,7 +6,7 @@ class CouriersController < ApplicationController
   # GET /couriers
   # GET /couriers.json
   def index
-    @couriers = Courier.paginate(page: params[:page], per_page: 10).order(updated_at: :desc)
+    @couriers = current_city.couriers.paginate(page: params[:page], per_page: 10).order(updated_at: :desc)
   end
 
   # GET /couriers/1
