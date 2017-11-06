@@ -25,4 +25,8 @@ Rails.application.routes.draw do
   resources :cities
 
   resources :couriers
+
+  resources :messages, only: [:index]
+
+  mount ActionCable.server => '/cable' 
 end
