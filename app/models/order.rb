@@ -6,6 +6,7 @@ class Order < ApplicationRecord
   belongs_to :user_address
 
   has_many :waybills
+  has_many :items
 
   workflow_column :courier_status 
 
