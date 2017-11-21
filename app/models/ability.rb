@@ -20,6 +20,7 @@ class Ability
       can :manage, Courier
       can :change_current_city, Worker
       can :manage, PriceRule
+      can :manage, Order
     end
   end
 end

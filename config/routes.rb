@@ -36,5 +36,8 @@ Rails.application.routes.draw do
 
   resources :messages, only: [:index]
 
+  resources :orders do 
+  end
+
   mount ActionCable.server => '/cable' 
 end
