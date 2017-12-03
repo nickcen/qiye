@@ -175,6 +175,13 @@ ActiveRecord::Schema.define(version: 201711061534181) do
     t.index ["user_id"], name: "index_user_addresses_on_user_id", using: :btree
   end
 
+  create_table "user_card_charge_settings", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.float    "min",        limit: 24, default: 0.0
+    t.float    "money_give", limit: 24, default: 0.0
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+  end
+
   create_table "user_card_logs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "kind",                     default: 0
     t.float    "real_money",    limit: 24, default: 0.0

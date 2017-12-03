@@ -48,6 +48,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :user_card_charge_settings
+
   mount ActionCable.server => '/cable' 
 
   root to: 'workers#signin'

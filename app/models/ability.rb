@@ -14,6 +14,7 @@ class Ability
       can :manage, City
       can :manage, Price
       can :manage, User
+      can :manage, UserCardChargeSetting
     end 
 
     if worker.has_role?(:fenchengshi)
