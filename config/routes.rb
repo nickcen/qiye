@@ -39,5 +39,10 @@ Rails.application.routes.draw do
   resources :orders do 
   end
 
+  resources :users do 
+  end
+
   mount ActionCable.server => '/cable' 
+
+  root to: 'workers#signin'
 end

@@ -13,6 +13,7 @@ class Ability
       can :manage, Product
       can :manage, City
       can :manage, Price
+      can :manage, User
     end 
 
     if worker.has_role?(:fenchengshi)
