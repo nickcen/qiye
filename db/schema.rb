@@ -83,6 +83,33 @@ ActiveRecord::Schema.define(version: 201711061534181) do
     t.index ["station_id"], name: "index_couriers_stations_on_station_id", using: :btree
   end
 
+  create_table "items", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "amount"
+    t.float    "price",      limit: 24
+    t.integer  "product_id"
+    t.integer  "order_id"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.index ["order_id"], name: "index_items_on_order_id", using: :btree
+    t.index ["product_id"], name: "index_items_on_product_id", using: :btree
+  end
+
+  create_table "orders", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "category_id"
+    t.integer  "user_id"
+    t.integer  "user_address_id"
+    t.float    "total_price",     limit: 24
+    t.string   "courier_status"
+    t.integer  "voucher_status"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.integer  "city_id"
+    t.index ["category_id"], name: "index_orders_on_category_id", using: :btree
+    t.index ["city_id"], name: "index_orders_on_city_id", using: :btree
+    t.index ["user_address_id"], name: "index_orders_on_user_address_id", using: :btree
+    t.index ["user_id"], name: "index_orders_on_user_id", using: :btree
+  end
+
   create_table "price_rules", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "grade"
     t.integer  "city_id"
@@ -138,6 +165,38 @@ ActiveRecord::Schema.define(version: 201711061534181) do
     t.index ["city_id"], name: "index_stations_on_city_id", using: :btree
   end
 
+  create_table "user_addresses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "user_id"
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "city_id"
+    t.index ["city_id"], name: "index_user_addresses_on_city_id", using: :btree
+    t.index ["user_id"], name: "index_user_addresses_on_user_id", using: :btree
+  end
+
+  create_table "user_card_logs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "kind",                     default: 0
+    t.float    "real_money",    limit: 24, default: 0.0
+    t.float    "fake_money",    limit: 24, default: 0.0
+    t.string   "loggable_type"
+    t.integer  "loggable_id"
+    t.integer  "user_card_id"
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.index ["loggable_type", "loggable_id"], name: "index_user_card_logs_on_loggable_type_and_loggable_id", using: :btree
+    t.index ["user_card_id"], name: "index_user_card_logs_on_user_card_id", using: :btree
+  end
+
+  create_table "user_cards", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.float    "real_money", limit: 24, default: 0.0
+    t.float    "fake_money", limit: 24, default: 0.0
+    t.integer  "user_id"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.index ["user_id"], name: "index_user_cards_on_user_id", using: :btree
+  end
+
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -153,6 +212,36 @@ ActiveRecord::Schema.define(version: 201711061534181) do
     t.datetime "updated_at",                          null: false
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  end
+
+  create_table "vouchers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "order_id"
+    t.integer  "status",                default: 0
+    t.datetime "payed_at"
+    t.float    "money",      limit: 24
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.index ["order_id"], name: "index_vouchers_on_order_id", using: :btree
+  end
+
+  create_table "waybills", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "order_id"
+    t.string   "status"
+    t.string   "sender_type"
+    t.integer  "sender_id"
+    t.integer  "from_address_id"
+    t.string   "receiver_type"
+    t.integer  "receiver_id"
+    t.integer  "to_address_id"
+    t.datetime "exp_time"
+    t.datetime "actual_time"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.index ["from_address_id"], name: "index_waybills_on_from_address_id", using: :btree
+    t.index ["order_id"], name: "index_waybills_on_order_id", using: :btree
+    t.index ["receiver_type", "receiver_id"], name: "index_waybills_on_receiver_type_and_receiver_id", using: :btree
+    t.index ["sender_type", "sender_id"], name: "index_waybills_on_sender_type_and_sender_id", using: :btree
+    t.index ["to_address_id"], name: "index_waybills_on_to_address_id", using: :btree
   end
 
   create_table "workers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -180,8 +269,16 @@ ActiveRecord::Schema.define(version: 201711061534181) do
 
   add_foreign_key "categories_cities", "categories"
   add_foreign_key "categories_cities", "cities"
+  add_foreign_key "items", "orders"
+  add_foreign_key "items", "products"
+  add_foreign_key "orders", "categories"
+  add_foreign_key "orders", "user_addresses"
+  add_foreign_key "orders", "users"
   add_foreign_key "price_rules", "categories"
   add_foreign_key "price_rules", "cities"
   add_foreign_key "prices", "products"
   add_foreign_key "products", "categories"
+  add_foreign_key "user_addresses", "users"
+  add_foreign_key "user_cards", "users"
+  add_foreign_key "vouchers", "orders"
 end

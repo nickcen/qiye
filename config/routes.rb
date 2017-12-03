@@ -40,6 +40,12 @@ Rails.application.routes.draw do
   end
 
   resources :users do 
+    resources :user_cards do 
+      member do 
+        get :charge
+        post :charge
+      end
+    end
   end
 
   mount ActionCable.server => '/cable' 
