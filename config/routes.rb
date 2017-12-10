@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
   devise_for :workers
+
+  devise_scope :worker do 
+    root to: 'devise/sessions#new'
+  end
   
   resources :workers do 
     member do 
@@ -46,11 +50,15 @@ Rails.application.routes.draw do
         post :charge
       end
     end
+    resources :coupons
+  end
+
+  resources :coupons
+  resources :coupon_lists do 
+    resources :order_promotions, only: [:new, :create, :edit, :update, :destroy]
   end
 
   resources :user_card_charge_settings
 
   mount ActionCable.server => '/cable' 
-
-  root to: 'workers#signin'
 end

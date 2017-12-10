@@ -56,3 +56,19 @@
         = will_paginate @user_card_logs, renderer: BootstrapPagination::Rails, param_name: :user_card_log_page
       .panel-footer
         = link_to '充值', charge_user_user_card_path(@user, @user.user_card), class: 'btn btn-info btn-sm'
+
+    .panel.panel-default
+      .panel-heading
+        | 优惠券
+      .panel-body
+        table.table.table-striped
+          thead
+            tr
+              th width='15%' 名称
+              th width='10%' 开始时间
+              th width='30%' 截止时间
+          tbody
+            = render @coupons
+        = will_paginate @coupons, renderer: BootstrapPagination::Rails, param_name: :coupon_page
+      .panel-footer
+        = link_to '发券', new_user_coupon_path(@user), class: 'btn btn-info btn-sm'
